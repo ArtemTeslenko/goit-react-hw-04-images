@@ -11,10 +11,11 @@ class App extends Component {
     page: 1,
     showModal: false,
     largeImgData: { src: '', alt: '' },
+    isQueryChanged: false,
   };
 
   setQuery = query => {
-    this.setState({ query: query, page: 1 });
+    this.setState({ query: query, page: 1, isQueryChanged: true });
   };
 
   toggleModal = () => {
@@ -29,12 +30,13 @@ class App extends Component {
 
   loadMore = () => {
     this.setState(prev => ({
+      isQueryChanged: false,
       page: (prev.page += 1),
     }));
   };
 
   render() {
-    const { largeImgData, showModal, query, page } = this.state;
+    const { largeImgData, showModal, query, page, isQueryChanged } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.setQuery} />
@@ -44,6 +46,7 @@ class App extends Component {
           onImgClick={this.toggleModal}
           shareSrc={this.shareSrc}
           loadMore={this.loadMore}
+          isQueryChanged={isQueryChanged}
         />
         {showModal && (
           <ShowModal onClose={this.toggleModal}>

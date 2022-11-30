@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-// import React, { Component } from 'react';
 import { useEffect } from 'react';
 import { Overlay, Paper } from './Modal.styled';
 import { createPortal } from 'react-dom';
