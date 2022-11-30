@@ -10,21 +10,14 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [largeImgData, setLargeImgData] = useState({ src: '', alt: '' });
-  const [isQueryChanged, setisQueryChanged] = useState(false);
 
   const handleSubmit = newQuery => {
     setQuery(newQuery);
     setPage(1);
-    setisQueryChanged(true);
   };
 
   const shareSrc = (src, alt) => {
     setLargeImgData({ src, alt });
-  };
-
-  const loadMore = () => {
-    setisQueryChanged(false);
-    setPage(prev => prev + 1);
   };
 
   return (
@@ -35,8 +28,7 @@ export default function App() {
         page={page}
         onImgClick={() => setShowModal(prev => !prev)}
         shareSrc={shareSrc}
-        loadMore={loadMore}
-        isQueryChanged={isQueryChanged}
+        loadMore={() => setPage(prev => prev + 1)}
       />
       {showModal && (
         <ShowModal onClose={() => setShowModal(prev => !prev)}>

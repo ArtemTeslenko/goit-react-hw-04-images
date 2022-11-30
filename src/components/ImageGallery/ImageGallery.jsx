@@ -13,7 +13,6 @@ export default function Gallery({
   query,
   loadMore,
   page,
-  isQueryChanged,
 }) {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
@@ -29,11 +28,12 @@ export default function Gallery({
   }, []);
 
   useEffect(() => {
+    setImages([]);
+  }, [query]);
+
+  useEffect(() => {
     if (!query) {
       return;
-    }
-    if (isQueryChanged) {
-      setImages([]);
     }
 
     setIsLoading(true);
@@ -56,7 +56,7 @@ export default function Gallery({
       .finally(() => {
         setIsLoading(false);
       });
-  }, [query, page, isQueryChanged]);
+  }, [query, page]);
 
   useEffect(() => {
     autoscroll();
@@ -105,5 +105,4 @@ Gallery.propTypes = {
   query: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   loadMore: PropTypes.func.isRequired,
-  isQueryChanged: PropTypes.bool.isRequired,
 };
