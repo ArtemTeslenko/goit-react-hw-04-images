@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import { ThreeDots } from 'react-loader-spinner';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ImageGallery } from './ImageGallery.styled';
 import { Urging, Loader } from './Helpers.styled';
 import GalleryItem from '../ImageGalleryItem';
 import LoadMore from '../Button';
 import autoscroll from '../Utils';
+
+const COMMON_URL = 'https://pixabay.com/api/';
+const KEY = '30103302-a3ef06cdfdc78e2e196d775c9';
 
 export default function Gallery({
   shareSrc,
@@ -19,14 +22,6 @@ export default function Gallery({
   const [isLoading, setIsLoading] = useState(false);
   const [totalHits, setTotalHits] = useState(0);
 
-  const COMMON_URL = useRef('');
-  const KEY = useRef('');
-
-  useEffect(() => {
-    COMMON_URL.current = 'https://pixabay.com/api/';
-    KEY.current = '30103302-a3ef06cdfdc78e2e196d775c9';
-  }, []);
-
   useEffect(() => {
     setImages([]);
   }, [query]);
@@ -38,7 +33,7 @@ export default function Gallery({
 
     setIsLoading(true);
     fetch(
-      `${COMMON_URL.current}?key=${KEY.current}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=12`
+      `${COMMON_URL}?key=${KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=12`
     )
       .then(response => {
         if (response.ok) {
